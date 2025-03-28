@@ -1,0 +1,36 @@
+{
+  "constructor": {
+    "prefix": "ctor",
+    "body": ["constructor() {", "\t$1", "}"]
+  },
+  "console.log": {
+    "prefix": "cl",
+    "body": ["console.log('[DEBUG] $1', $2);"]
+  },
+  "Performance": {
+    "prefix": "pnow",
+    "body": [
+      "const time1 = performance.now();",
+      "const time2 = performance.now();",
+      "console.log('[DEBUG] duration', time2 - time1);"
+    ]
+  },
+  "Jest: describe": {
+    "prefix": "describe",
+    "body": [
+      "describe('$1', () => {",
+      "\tit('$2', () => {",
+      "\t\t$3",
+      "\t});",
+      "});"
+    ]
+  },
+  "Jest: test": {
+    "prefix": "test",
+    "body": ["it('$2', () => {", "\t$3", "});"]
+  },
+  "Node: sleep": {
+    "prefix": "sleep",
+    "body": ["await new Promise((resolve) => setTimeout(resolve, ${5000}));"]
+  }
+}

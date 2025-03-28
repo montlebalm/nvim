@@ -1,0 +1,20 @@
+{
+  "useEffect": {
+    "prefix": "useEffect",
+    "body": ["useEffect(() => {", "\t$1", "}, []);"]
+  },
+  "useEffectMemo": {
+    "prefix": "useEffectMemo",
+    "body": [
+      "// Memoize callback to remove it as a dependency",
+      "const $1Ref = useRef($1);",
+      "useEffect(() => {",
+      "\t$1Ref.current = $1;",
+      "}, [$1]);"
+    ]
+  },
+  "useMemo": {
+    "prefix": "useMemo",
+    "body": ["useMemo(() => {", "\t$1", "}, []);"]
+  }
+}

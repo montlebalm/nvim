@@ -1,0 +1,24 @@
+{
+  "name": "monty-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+          "svelte"
+        ],
+        "path": "./typescript.json"
+      },
+      {
+        "language": [
+          "javascriptreact",
+          "typescriptreact"
+        ],
+        "path": "./react.json"
+      }
+    ]
+  }
+}
