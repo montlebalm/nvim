@@ -8,7 +8,13 @@ return {
 		-- Useful status updates for LSP
 		{
 			"j-hui/fidget.nvim",
-			opts = {}
+			opts = {
+				notification = {
+					window = {
+						normal_hl = "FidgetWindow",
+					}
+				}
+			}
 		},
 
 		-- Additional lua configuration, makes nvim stuff amazing!
