@@ -71,14 +71,5 @@ return {
 			require('fzf-lua').live_grep,
 			{ desc = "Search by Live Grep" }
 		)
-
-		-- vim.keymap.set(
-		-- 	"n",
-		-- 	"<leader>g",
-		-- 	telescope.extensions.live_grep_args.live_grep_args,
-		-- 	{ desc = "[S]earch by [G]rep" }
-		-- )
-		--
-		-- vim.keymap.set("n", "<leader>k", ":Telescope file_browser path=%:p:h select_buffer=true<CR><esc>")
 	end,
 }
