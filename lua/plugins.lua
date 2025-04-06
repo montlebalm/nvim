@@ -31,27 +31,9 @@ return {
 
 	{
 		"klen/nvim-config-local",
-		opts = {}
-	},
-
-	-- Formatting
-	{
-		"stevearc/conform.nvim",
 		opts = {
-			formatters_by_ft = {
-				json = { "prettier" },
-				lua = { "stylua" },
-				-- JavaScript and friends
-				javascript = { "prettier" },
-				javascriptreact = { "prettier" },
-				typescript = { "prettier" },
-				typescriptreact = { "prettier" },
-			},
-			format_on_save = {
-				timeout_ms = 2000,
-				lsp_fallback = true,
-			},
-		},
+			lookup_parents = true,
+		}
 	},
 
 	-- Useful plugin to show you pending keybinds.
