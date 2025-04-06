@@ -35,6 +35,10 @@ return {
 				["gutter"]  = "-1",
 			},
 			grep = {
+				fzf_opts = {
+					-- Allow cycling through history with <ctrl-p> and <ctrl-n>
+					["--history"] = vim.fn.stdpath("data") .. "/fzf_grep_hist",
+				},
 				rg_glob = true,
 			},
 			winopts = {
