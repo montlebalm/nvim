@@ -32,6 +32,19 @@ return {
 		end,
 	},
 
+	-- Better buffer deletion
+	{
+		"qpkorr/vim-bufkill",
+		config = function()
+			vim.cmd([[
+				let g:BufKillCreateMappings = 0
+
+				" Overwrite default "bd" command
+				cnoremap bd BD
+			]])
+		end,
+	},
+
 	{
 		"klen/nvim-config-local",
 		opts = {
