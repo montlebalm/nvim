@@ -9,6 +9,9 @@ return {
 	-- Change surround characters
 	"tpope/vim-surround",
 
+	-- Support for aliases when using "gf"
+	"PsychoLlama/further.vim",
+
 	-- Text objects
 	{
 		"kana/vim-textobj-user",
