@@ -53,7 +53,7 @@ return {
 			"n",
 			"<leader>b",
 			require('fzf-lua').buffers,
-			{ desc = "Find [B]uffers" }
+			{ desc = "Search [B]uffers" }
 		)
 
 		-- Files
@@ -61,7 +61,7 @@ return {
 			"n",
 			"<leader>p",
 			require('fzf-lua').files,
-			{ desc = "[S]earch [F]iles" }
+			{ desc = "Search Files" }
 		)
 
 		-- Live grep
@@ -69,7 +69,7 @@ return {
 			"n",
 			"<leader>f",
 			require('fzf-lua').live_grep,
-			{ desc = "[S]earch by [G]rep" }
+			{ desc = "Search by Live Grep" }
 		)
 
 		-- vim.keymap.set(
