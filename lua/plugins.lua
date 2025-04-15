@@ -53,7 +53,12 @@ return {
 	},
 
 	-- Useful plugin to show you pending keybinds.
-	{ "folke/which-key.nvim", opts = {} },
+	{
+		"folke/which-key.nvim",
+		opts = {
+			delay = 2000,
+		}
+	},
 
 	-- Adds git releated signs to the gutter (and utils)
 	{
