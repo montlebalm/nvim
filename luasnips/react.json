@@ -15,6 +15,24 @@
   },
   "useMemo": {
     "prefix": "useMemo",
-    "body": ["useMemo(() => {", "\t$1", "}, []);"]
+    "body": [
+      "useMemo(() => {",
+      "\t$1",
+      "}, []);"
+    ]
+  },
+  "component": {
+    "prefix": "component",
+    "body": [
+      "import React, { ReactNode } from 'react';",
+      "",
+      "interface ${1:Component}Props {",
+      "\t",
+      "}",
+      "",
+      "export const ${1:Component} = ({ foo }: ${1:Component}Props): ReactNode => {",
+      "\treturn <div />;",
+      "};"
+    ]
   }
 }
