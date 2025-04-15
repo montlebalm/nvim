@@ -11,7 +11,7 @@ return {
 				git_icons = false,
 
 				-- Paths
-				formatter = 'path.filename_first',
+				-- formatter = 'path.filename_first',
 
 				-- Remove help text
 				header = false,
