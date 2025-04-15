@@ -1,7 +1,11 @@
 {
   "useEffect": {
     "prefix": "useEffect",
-    "body": ["useEffect(() => {", "\t$1", "}, []);"]
+    "body": [
+      "useEffect(() => {",
+      "\t$1",
+      "}, []);"
+    ]
   },
   "useEffectMemo": {
     "prefix": "useEffectMemo",
