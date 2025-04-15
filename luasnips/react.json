@@ -8,9 +8,7 @@
     "body": [
       "// Memoize callback to remove it as a dependency",
       "const $1Ref = useRef($1);",
-      "useEffect(() => {",
-      "\t$1Ref.current = $1;",
-      "}, [$1]);"
+      "$1Ref.current = $1;"
     ]
   },
   "useMemo": {
