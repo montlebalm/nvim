@@ -9,14 +9,14 @@ vim.g.mapleader = " "
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable",
-		lazypath,
-	})
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -133,29 +133,67 @@ vim.keymap.set("v", "<C-k>", ":m-2<CR>gv=gv")
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank({ higroup = 'Visual' })
-	end,
-	group = highlight_group,
-	pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({ higroup = 'Visual' })
+  end,
+  group = highlight_group,
+  pattern = "*",
 })
+
+--
+-- Copy without leading whitespace
+--
+
+vim.api.nvim_create_user_command(
+  "CleanYank",
+  function(tbl)
+    local selection = vim.api.nvim_buf_get_lines(
+      0,
+      tbl.line1 - 1,
+      tbl.line2,
+      true
+    )
+
+
+    -- Calculate number of spaces to remove from each line
+    local first_line = selection[1]
+    local first_line_leading_whitespace = first_line:match('^%s*')
+    local num_leading_spaces = string.len(first_line_leading_whitespace)
+
+    local selection_trimmed = {}
+    for key, line in pairs(selection) do
+      -- Remove leading spaces
+      local line_trimmed = string.sub(line, num_leading_spaces + 1)
+
+      -- Concatenate
+      table.insert(selection_trimmed, line_trimmed)
+    end
+
+    -- Copy to clipboard
+    local selection_trimmed_text = table.concat(selection_trimmed, "\n")
+    vim.fn.setreg("+", selection_trimmed_text)
+  end,
+  { range = true }
+)
+
+vim.keymap.set("v", "<C-y>", ":CleanYank<CR>")
 
 --
 -- Custom filetype detection
 --
 
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-	pattern = {
-		"*.aliases",
-		"*.exports",
-		"*.extra",
-		"*.path",
-		"*.private",
-		"*.ripgreprc",
-	},
-	callback = function(event)
-		vim.api.nvim_buf_set_option(event.buf, "filetype", "bash")
-	end,
+  pattern = {
+    "*.aliases",
+    "*.exports",
+    "*.extra",
+    "*.path",
+    "*.private",
+    "*.ripgreprc",
+  },
+  callback = function(event)
+    vim.api.nvim_buf_set_option(event.buf, "filetype", "bash")
+  end,
 })
 
 --
