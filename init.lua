@@ -154,16 +154,14 @@ vim.api.nvim_create_user_command(
       true
     )
 
-    local num_leading_spaces = nil
+
+    -- Calculate number of spaces to remove from each line
+    local first_line = selection[1]
+    local first_line_leading_whitespace = first_line:match('^%s*')
+    local num_leading_spaces = string.len(first_line_leading_whitespace)
+
     local selection_trimmed = {}
-
     for key, line in pairs(selection) do
-      -- Calculate number of spaces to remove from each line
-      if (num_leading_spaces == nil) then
-        local line_trimmed = line:match('^%s*(.*)')
-        num_leading_spaces = string.len(line) - string.len(line_trimmed)
-      end
-
       -- Remove leading spaces
       local line_trimmed = string.sub(line, num_leading_spaces + 1)
 
@@ -172,7 +170,8 @@ vim.api.nvim_create_user_command(
     end
 
     -- Copy to clipboard
-    vim.fn.setreg("+", table.concat(selection_trimmed, "\n"))
+    local selection_trimmed_text = table.concat(selection_trimmed, "\n")
+    vim.fn.setreg("+", selection_trimmed_text)
   end,
   { range = true }
 )
