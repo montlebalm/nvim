@@ -9,14 +9,14 @@ vim.g.mapleader = " "
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable",
-		lazypath,
-	})
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -133,11 +133,11 @@ vim.keymap.set("v", "<C-k>", ":m-2<CR>gv=gv")
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank({ higroup = 'Visual' })
-	end,
-	group = highlight_group,
-	pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({ higroup = 'Visual' })
+  end,
+  group = highlight_group,
+  pattern = "*",
 })
 
 --
@@ -184,17 +184,17 @@ vim.keymap.set("v", "<C-y>", ":CleanYank<CR>")
 --
 
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-	pattern = {
-		"*.aliases",
-		"*.exports",
-		"*.extra",
-		"*.path",
-		"*.private",
-		"*.ripgreprc",
-	},
-	callback = function(event)
-		vim.api.nvim_buf_set_option(event.buf, "filetype", "bash")
-	end,
+  pattern = {
+    "*.aliases",
+    "*.exports",
+    "*.extra",
+    "*.path",
+    "*.private",
+    "*.ripgreprc",
+  },
+  callback = function(event)
+    vim.api.nvim_buf_set_option(event.buf, "filetype", "bash")
+  end,
 })
 
 --
