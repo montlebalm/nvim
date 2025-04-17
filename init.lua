@@ -141,6 +141,45 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 --
+-- Copy without leading whitespace
+--
+
+vim.api.nvim_create_user_command(
+  "CleanYank",
+  function(tbl)
+    local selection = vim.api.nvim_buf_get_lines(
+      0,
+      tbl.line1 - 1,
+      tbl.line2,
+      true
+    )
+
+    local num_leading_spaces = nil
+    local selection_trimmed = {}
+
+    for key, line in pairs(selection) do
+      -- Calculate number of spaces to remove from each line
+      if (num_leading_spaces == nil) then
+        local line_trimmed = line:match('^%s*(.*)')
+        num_leading_spaces = string.len(line) - string.len(line_trimmed)
+      end
+
+      -- Remove leading spaces
+      local line_trimmed = string.sub(line, num_leading_spaces + 1)
+
+      -- Concatenate
+      table.insert(selection_trimmed, line_trimmed)
+    end
+
+    -- Copy to clipboard
+    vim.fn.setreg("+", table.concat(selection_trimmed, "\n"))
+  end,
+  { range = true }
+)
+
+vim.keymap.set("v", "<C-y>", ":CleanYank<CR>")
+
+--
 -- Custom filetype detection
 --
 
