@@ -49,7 +49,27 @@ return {
 					},
 				},
 				scrollbar = "border",
-			}
+			},
+			--
+			-- Picker options
+			--
+			buffers = {
+				actions = {
+					['ctrl-d'] = {
+						fn = require('fzf-lua').actions.buf_del,
+						reload = true,
+					},
+				},
+			},
+			marks = {
+				actions = {
+					['ctrl-d'] = {
+						fn = require('fzf-lua').actions.mark_del,
+						reload = true,
+					},
+				},
+				marks = '%a',
+			},
 		})
 
 		-- Buffers
