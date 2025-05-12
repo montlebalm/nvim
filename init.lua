@@ -117,7 +117,7 @@ vim.cmd([[map <leader>o :silent !open <C-R>=expand("%:p:h")<CR><CR>]])
 
 -- Start edit command with the path of the current file
 vim.cmd([[map <leader>e :e <C-R>=expand("%:h") . "/"<CR>]])
-vim.cmd([[nnoremap <leader>ec :let @*=expand("%:~:.")<CR>]])
+vim.cmd([[nnoremap <leader>c :let @*=expand("%:~:.")<CR>]])
 
 -- <enter> makes a newline (except in quickfix)
 vim.cmd([[nnoremap <expr> <CR> &buftype ==# 'quickfix' ? "\<CR>" : 'o<esc>']])
