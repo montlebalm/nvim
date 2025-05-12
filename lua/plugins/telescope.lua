@@ -75,5 +75,13 @@ return {
 			require('fzf-lua').live_grep,
 			{ desc = "Search by Live Grep" }
 		)
+
+		-- Marks
+		vim.keymap.set(
+			"n",
+			"<leader>m",
+			require('fzf-lua').marks,
+			{ desc = "Search [M]arks" }
+		)
 	end,
 }
