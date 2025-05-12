@@ -4,6 +4,7 @@ return {
 	dependencies = {
 		"mason-org/mason.nvim",
 		"mason-org/mason-lspconfig.nvim",
+		"nvim-lua/plenary.nvim",
 
 		-- Useful status updates for LSP
 		{
