@@ -1,7 +1,3 @@
---
--- Neovim Default (Light)
---
-
 -- Invert the statusline when in insert mode
 vim.cmd([[
 	autocmd InsertEnter * hi Statusline ctermbg=0 ctermfg=15
