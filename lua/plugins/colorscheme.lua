@@ -14,6 +14,7 @@ return {
 		dir = "~/Developer/greybeard",
 		dev = true,
 		enabled = true,
+		lazy = false,
 		priority = 1000,
 		config = function()
 			vim.o.background = "light"
