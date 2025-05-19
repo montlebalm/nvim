@@ -39,102 +39,111 @@ return {
 	},
 
 	config = function()
-		--
-		-- Keymaps
-		--
-
-		local on_attach = function(client, bufnr)
-			local opts = { buffer = bufnr }
-
-			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-
-			vim.keymap.set("n", "grd", vim.lsp.buf.definition, opts)
-			vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, opts)
-
-			vim.keymap.set("n", "<leader>af", vim.diagnostic.open_float, opts)
-			vim.keymap.set("n", "<leader>ap", function()
-				vim.diagnostic.goto_prev({
-					severity = vim.diagnostic.severity.ERROR,
-				})
-			end, opts)
-			vim.keymap.set("n", "<leader>an", function()
-				vim.diagnostic.goto_next({
-					severity = vim.diagnostic.severity.ERROR,
-				})
-			end, opts)
-		end
+		-- vim.lsp.log.set_level(vim.log.levels.INFO)
 
 		--
 		-- Servers
 		--
 
-		local servers = {
-			bashls = {},
-			cssls = {},
-			eslint = {
-				settings = {
-					format = false,
-				},
+		vim.lsp.config('bashls', {})
+		vim.lsp.config('cssls', {})
+		vim.lsp.config('graphql', {})
+		vim.lsp.config('html', {})
+		vim.lsp.config('jsonls', {})
+		vim.lsp.config('svelte', {})
+		vim.lsp.config('vimls', {})
+		vim.lsp.config('yamlls', {})
+
+		vim.lsp.config('eslint', {
+			codeActionOnSave = {
+				enable = true,
+				mode = 'all',
 			},
-			graphql = {},
-			html = {},
-			jsonls = {},
-			lua_ls = {
-				settings = {
-					Lua = {
-						diagnostics = {
-							-- Recognize "vim" global
-							globals = { "vim" },
-						},
-						workspace = {
-							checkThirdParty = false,
-						},
-						telemetry = {
-							enable = false,
-						},
+			settings = {
+				format = false,
+			},
+		})
+
+		vim.lsp.config('lua_ls', {
+			settings = {
+				Lua = {
+					diagnostics = {
+						-- Recognize "vim" global
+						globals = { "vim" },
+					},
+					workspace = {
+						checkThirdParty = false,
+					},
+					telemetry = {
+						enable = false,
 					},
 				},
 			},
-			-- stylelint_lsp = {
-			-- 	settings = nil,
-			-- },
-			svelte = {},
-			ts_ls = {
-				init_options = {
-					hostInfo = "neovim",
-					maxTsServerMemory = 32768,
-					preferences = {
-						-- Prefer project-relative imports (e.g., "foo/bar" instead of "../bar")
-						importModuleSpecifierPreference = "non-relative",
+		})
+
+		-- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/configs/ts_ls.lua
+		vim.lsp.config('ts_ls', {
+			init_options = {
+				preferences = {
+					-- Prefer project-relative imports (e.g., "foo/bar" instead of "../bar")
+					importModuleSpecifierPreference = "non-relative",
+				},
+			},
+			settings = {
+				typescript = {
+					tsserver = {
+						maxTsServerMemory = 32768,
 					},
 				},
-				root_dir = require('lspconfig/util').root_pattern(".git"),
 			},
-			vimls = {},
-			yamlls = {},
-		}
+		})
 
-		local lspconfig = require("lspconfig")
+		--
+		-- Capabilities
+		--
 
-		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+		local lsp_defaults = require('lspconfig').util.default_config
+		lsp_defaults.capabilities =
+				vim.tbl_deep_extend('force', lsp_defaults.capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+		--
+		-- mason
+		--
 
 		require("mason").setup({})
 
 		require("mason-lspconfig").setup({
+			automatic_enable = true,
 			automatic_installation = true,
-			ensure_installed = vim.tbl_keys(servers),
-			handlers = {
-				function(server_name)
-					lspconfig[server_name].setup({
-						capabilities = lsp_capabilities,
-						init_options = servers[server_name].init_options,
-						on_attach = on_attach,
-						root_dir = servers[server_name].root_dir,
-						settings = servers[server_name].settings,
+			ensure_installed = {},
+		})
+
+		--
+		-- Keymaps
+		--
+
+		vim.api.nvim_create_autocmd('LspAttach', {
+			group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+			callback = function(ev)
+				local opts = { buffer = ev.buf }
+
+				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+
+				vim.keymap.set("n", "grd", vim.lsp.buf.definition, opts)
+				vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, opts)
+
+				vim.keymap.set("n", "<leader>af", vim.diagnostic.open_float, opts)
+				vim.keymap.set("n", "<leader>ap", function()
+					vim.diagnostic.goto_prev({
+						severity = vim.diagnostic.severity.ERROR,
 					})
-				end,
-			},
+				end, opts)
+				vim.keymap.set("n", "<leader>an", function()
+					vim.diagnostic.goto_next({
+						severity = vim.diagnostic.severity.ERROR,
+					})
+				end, opts)
+			end
 		})
 
 		--
