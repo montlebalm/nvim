@@ -110,7 +110,7 @@ vim.keymap.set("n", "<leader>=", "<c-W>=")
 vim.keymap.set("n", "<leader>/", ":noh<CR>")
 
 -- Eslint fix
-vim.keymap.set("n", "gl", ":EslintFixAll<CR>:w<CR>")
+vim.keymap.set("n", "gl", ":LspEslintFixAll<CR>")
 
 -- Open the directory of the current file
 vim.cmd([[map <leader>o :silent !open <C-R>=expand("%:p:h")<CR><CR>]])
