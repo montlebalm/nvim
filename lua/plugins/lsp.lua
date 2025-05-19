@@ -12,7 +12,10 @@ return {
 			opts = {
 				notification = {
 					window = {
-						normal_hl = "FidgetWindow",
+						border = "solid",
+						normal_hl = "NormalFloat",
+						x_padding = 0,
+						y_padding = 1,
 					}
 				}
 			}
