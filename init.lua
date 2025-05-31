@@ -122,6 +122,9 @@ vim.cmd([[nnoremap <leader>ec :let @*=expand("%:~:.")<CR>]])
 -- <enter> makes a newline (except in quickfix)
 vim.cmd([[nnoremap <expr> <CR> &buftype ==# 'quickfix' ? "\<CR>" : 'o<esc>']])
 
+-- Enable <tab> to jump to matching paren
+vim.keymap.set("n", "<tab>", "%", { noremap = true })
+
 -- Visual shifting (does not exit Visual mode)
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
