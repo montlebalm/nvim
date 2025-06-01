@@ -71,11 +71,11 @@ vim.o.splitright = true
 vim.o.completeopt = "menuone,noselect"
 
 -- Optionally enable true color
--- vim.cmd([[
---   if (has("termguicolors"))
---    set termguicolors
---   endif
--- ]])
+vim.cmd([[
+  if (has("termguicolors"))
+   set termguicolors
+  endif
+]])
 
 -- Don't wrap
 vim.o.wrap = false
