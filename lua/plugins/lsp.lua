@@ -12,6 +12,7 @@ return {
 				notification = {
 					window = {
 						normal_hl = "FidgetWindow",
+						winblend = 0,
 					}
 				}
 			}
