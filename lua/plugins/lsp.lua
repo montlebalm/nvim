@@ -14,6 +14,7 @@ return {
 					window = {
 						border = "solid",
 						normal_hl = "NormalFloat",
+						winblend = 0,
 						x_padding = 0,
 						y_padding = 1,
 					}
