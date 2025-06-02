@@ -12,6 +12,20 @@ return {
 	-- Support for aliases when using "gf"
 	"PsychoLlama/further.vim",
 
+	-- AI completion
+	{
+		"olimorris/codecompanion.nvim",
+		config = function()
+			require('codecompanion').setup({
+				strategies = {
+					inline = {
+						adapter = "anthropic",
+					},
+				},
+			})
+		end
+	},
+
 	-- Text objects
 	{
 		"kana/vim-textobj-user",
@@ -24,12 +38,11 @@ return {
 
 	{
 		"stevearc/oil.nvim",
-		config = function()
-			require('oil').setup({})
-
-			vim.keymap.set("n", "-", "<cmd>Oil<cr>", { desc = "Open file browser" })
-			vim.keymap.set("n", "<leader>k", "<cmd>Oil<cr>", { desc = "Open file browser" })
-		end,
+		opts = {},
+		keys = {
+			{ "-",         "<cmd>Oil<cr>", desc = "Open file browser" },
+			{ "<leader>k", "<cmd>Oil<cr>", desc = "Open file browser" },
+		},
 	},
 
 	-- Better buffer deletion
@@ -63,48 +76,28 @@ return {
 	-- Adds git releated signs to the gutter (and utils)
 	{
 		"lewis6991/gitsigns.nvim",
-		config = function()
-			require("gitsigns").setup({
-				attach_to_untracked = false,
-				signs = {
-					add = { text = "+" },
-					change = { text = "~" },
-					delete = { text = "_" },
-					topdelete = { text = "‾" },
-					changedelete = { text = "~" },
-				},
-				on_attach = function(bufnr)
-					local gs = package.loaded.gitsigns
-
-					local function map(mode, l, r, opts)
-						opts = opts or {}
-						opts.buffer = bufnr
-						vim.keymap.set(mode, l, r, opts)
-					end
-
-					-- Navigation
-					map("n", "<leader>hn", gs.next_hunk)
-					map("n", "<leader>hp", gs.prev_hunk)
-
-					-- Actions
-					-- map("n", "<leader>hu", gs.undo_stage_hunk)
-					map("n", "<leader>hs", gs.stage_hunk)
-					map("n", "<leader>hu", gs.reset_hunk)
-
-					-- Text object
-					map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
-				end,
-			})
-		end,
+		opts = {
+			attach_to_untracked = false,
+			signs = {
+				add = { text = "+" },
+				change = { text = "~" },
+				delete = { text = "_" },
+				topdelete = { text = "‾" },
+				changedelete = { text = "~" },
+			},
+		},
+		keys = {
+			{ "<leader>hn", "<cmd>Gitsigns next_hunk<cr>",  desc = "Next Git hunk", },
+			{ "<leader>hp", "<cmd>Gitsigns prev_hunk<cr>",  desc = "Prev Git hunk", },
+			{ "<leader>hu", "<cmd>Gitsigns reset_hunk<cr>", desc = "Reset Git hunk", },
+		},
 	},
 
 	{
 		'sindrets/diffview.nvim',
-		config = function()
-			require('diffview').setup({
-				use_icons = false,
-			})
-		end,
+		opts = {
+			use_icons = false,
+		},
 	},
 
 	-- "gc" to comment visual regions/lines
@@ -131,12 +124,10 @@ return {
 			vim.g.copilot_no_tab_map = true
 			vim.g.copilot_assume_mapped = true
 			vim.g.copilot_tab_fallback = ""
-
-			vim.keymap.set("i", "<C-J>", 'copilot#Accept("<CR>")', {
-				expr = true,
-				replace_keycodes = false,
-			})
 		end,
+		keys = {
+			{ "<C-J>", 'copilot#Accept("<CR>")', "i", desc = "Accept suggestion", expr = true, replace_keycodes = false },
+		},
 	},
 
 	-- Reload browser
@@ -147,8 +138,9 @@ return {
 			-- vim.g.reload_browser_firefox = 1
 			-- vim.g.reload_browser_safari = 1
 			-- vim.g.reload_browser_safari_tech_preview = 1
-
-			vim.keymap.set("n", "<leader>rs", ":call ReloadBrowser()<cr>", { silent = true, noremap = true })
 		end,
+		keys = {
+			{ "<leader>rs", "<cmd>call ReloadBrowser()<cr>", desc = "Reload browser", silent = true },
+		},
 	},
 }
