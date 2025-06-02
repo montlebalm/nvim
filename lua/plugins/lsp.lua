@@ -40,50 +40,77 @@ return {
 	},
 
 	config = function()
-		-- vim.lsp.log.set_level(vim.log.levels.INFO)
+		-- vim.lsp.log.set_level(vim.log.levels.DEBUG)
 
 		--
 		-- Servers
 		--
 
-		vim.lsp.config('bashls', {})
-		vim.lsp.config('cssls', {})
-		vim.lsp.config('graphql', {})
-		vim.lsp.config('html', {})
-		vim.lsp.config('jsonls', {})
-		vim.lsp.config('svelte', {})
-		vim.lsp.config('vimls', {})
-		vim.lsp.config('yamlls', {})
+		vim.lsp.enable('bashls')
+		vim.lsp.enable('cssls')
+		vim.lsp.enable('graphql', false)
+		vim.lsp.enable('html')
+		vim.lsp.enable('jsonls')
+		vim.lsp.enable('svelte', false)
+		vim.lsp.enable('vimls')
+		vim.lsp.enable('yamlls', false)
 
 		vim.lsp.config('eslint', {
-			codeActionOnSave = {
-				enable = true,
-				mode = 'all',
-			},
 			settings = {
 				format = false,
 			},
 		})
+		vim.lsp.enable('eslint')
 
 		vim.lsp.config('lua_ls', {
 			settings = {
 				Lua = {
 					diagnostics = {
-						-- Recognize "vim" global
 						globals = { "vim" },
-					},
-					workspace = {
-						checkThirdParty = false,
 					},
 					telemetry = {
 						enable = false,
 					},
+					workspace = {
+						checkThirdParty = false,
+					},
 				},
 			},
 		})
+		vim.lsp.enable('lua_ls')
 
 		-- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/configs/ts_ls.lua
 		vim.lsp.config('ts_ls', {
+			-- cmd = { "typescript-language-server", "--stdio", "--canUseWatchEvents" },
+			init_options = {
+				-- https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#preferences-options
+				preferences = {
+					-- canUseWatchEvents = true,
+					disableAutomaticTypingAcquisition = true,
+					-- Prefer project-relative imports (e.g., "foo/bar" instead of "../bar")
+					importModuleSpecifierPreference = "non-relative",
+				},
+				tsserver = {
+					logDirectory = '/Users/cmontrois/Desktop/ts-logs',
+					logVerbosity = 'verbose',
+				},
+			},
+			settings = {
+				typescript = {
+					-- https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#tsserver-options
+					tsserver = {
+						maxTsServerMemory = 32768,
+						tsdk = './node_modules/typescript/lib',
+					},
+				},
+			},
+		})
+		vim.lsp.enable('ts_ls')
+
+		vim.lsp.config('tsgo_ls', {
+			cmd = {
+				vim.loop.os_homedir() .. "/Developer/libs/typescript-go/built/local/tsgo", "--lsp", "-stdio"
+			},
 			init_options = {
 				preferences = {
 					-- Prefer project-relative imports (e.g., "foo/bar" instead of "../bar")
@@ -98,6 +125,7 @@ return {
 				},
 			},
 		})
+		vim.lsp.enable('tsgo_ls', false)
 
 		--
 		-- Capabilities
@@ -114,9 +142,21 @@ return {
 		require("mason").setup({})
 
 		require("mason-lspconfig").setup({
-			automatic_enable = true,
+			automatic_enable = false,
 			automatic_installation = true,
-			ensure_installed = {},
+			ensure_installed = {
+				'bashls',
+				'cssls',
+				'eslint',
+				'graphql',
+				'html',
+				'jsonls',
+				'lua_ls',
+				'svelte',
+				'ts_ls',
+				'vimls',
+				'yamlls',
+			},
 		})
 
 		--
