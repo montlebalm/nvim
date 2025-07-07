@@ -3,25 +3,6 @@
 vim.keymap.set("n", "<SPACE>", "<Nop>", {})
 vim.g.mapleader = " "
 
---
--- lazy.nvim
---
-
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup("plugins")
-
 -- Keep cursor in the center of the screen
 vim.opt.scrolloff = 0
 
@@ -80,9 +61,9 @@ vim.cmd([[
 -- Don't wrap
 vim.o.wrap = false
 
---
+-------------------------------------------------------------------------------
 -- Basic keymaps
---
+-------------------------------------------------------------------------------
 
 -- Easier command character
 vim.keymap.set("n", ";", ":")
@@ -112,9 +93,6 @@ vim.keymap.set("n", "<leader>=", "<c-W>=")
 -- Clear seach highlight
 vim.keymap.set("n", "<leader>/", ":noh<CR>")
 
--- Eslint fix
-vim.keymap.set("n", "gl", ":LspEslintFixAll<CR>")
-
 -- Open the directory of the current file
 vim.cmd([[map <leader>o :silent !open <C-R>=expand("%:p:h")<CR><CR>]])
 
@@ -141,8 +119,12 @@ vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("v", "<C-j>", ":m'>+<CR>gv=gv")
 vim.keymap.set("v", "<C-k>", ":m-2<CR>gv=gv")
 
+-------------------------------------------------------------------------------
 -- Highlight on yank
+-------------------------------------------------------------------------------
+
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     vim.highlight.on_yank({ higroup = 'Visual' })
@@ -151,9 +133,29 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
 })
 
---
+-------------------------------------------------------------------------------
+-- Markdown
+-------------------------------------------------------------------------------
+
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  pattern = { '*.md' },
+  callback = function()
+    vim.o.wrap = true
+    vim.o.linebreak = true
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufWinLeave' }, {
+  pattern = { '*.md' },
+  callback = function()
+    vim.o.wrap = false
+    vim.o.linebreak = false
+  end,
+})
+
+-------------------------------------------------------------------------------
 -- Copy without leading whitespace
---
+-------------------------------------------------------------------------------
 
 vim.api.nvim_create_user_command(
   "CleanYank",
@@ -164,7 +166,6 @@ vim.api.nvim_create_user_command(
       tbl.line2,
       true
     )
-
 
     -- Calculate number of spaces to remove from each line
     local first_line = selection[1]
@@ -189,9 +190,9 @@ vim.api.nvim_create_user_command(
 
 vim.keymap.set("v", "<C-y>", ":CleanYank<CR>")
 
---
+-------------------------------------------------------------------------------
 -- Custom filetype detection
---
+-------------------------------------------------------------------------------
 
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   pattern = {
@@ -207,9 +208,33 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   end,
 })
 
---
+-------------------------------------------------------------------------------
+-- Diagnostics
+-------------------------------------------------------------------------------
+
+vim.diagnostic.config({
+  severity_sort = false,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "•",
+      [vim.diagnostic.severity.HINT] = "?",
+      [vim.diagnostic.severity.INFO] = "i",
+      [vim.diagnostic.severity.WARN] = "◦",
+    },
+  },
+  underline = true,
+  update_in_insert = false,
+  virtual_lines = false,
+  virtual_text = false,
+})
+
+-- Show diagnostic in float
+vim.o.updatetime = 1000
+vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
+
+-------------------------------------------------------------------------------
 -- Statusline
---
+-------------------------------------------------------------------------------
 
 vim.cmd([[
 
@@ -222,3 +247,29 @@ set statusline+=%=                          " switch to RHS
 set statusline+=%l/%L:%c\                   " number of lines
 
 ]])
+
+-------------------------------------------------------------------------------
+-- Lazy
+-------------------------------------------------------------------------------
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+  spec = {
+    import = "plugins",
+  },
+  change_detection = {
+    notify = false,
+  },
+})
