@@ -263,6 +263,13 @@ return {
 				documentation = {
 					auto_show = true,
 				},
+				menu = {
+					draw = {
+						columns = {
+							{ "label", "label_description", gap = 1 },
+							{ "kind" } },
+					},
+				},
 			},
 			fuzzy = {
 				implementation = "prefer_rust_with_warning"
