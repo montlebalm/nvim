@@ -441,6 +441,7 @@ return {
 			vim.lsp.enable('graphql', false)
 			vim.lsp.enable('html')
 			vim.lsp.enable('jsonls')
+			vim.lsp.enable('stylelint_lsp')
 			vim.lsp.enable('svelte', false)
 			vim.lsp.enable('vimls')
 			vim.lsp.enable('yamlls', false)
