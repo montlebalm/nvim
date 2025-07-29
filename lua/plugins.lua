@@ -239,81 +239,9 @@ return {
 	-- Completion
 	------------------------------------------------------------------------------
 
-	{
-		"hrsh7th/nvim-cmp",
-
-		enabled = true,
-
-		dependencies = {
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-nvim-lsp",
-			"L3MON4D3/LuaSnip",
-			"saadparwaiz1/cmp_luasnip",
-		},
-
-		config = function()
-			require("luasnip.loaders.from_vscode").lazy_load({
-				paths = { "./luasnips" },
-			})
-
-			local luasnip = require("luasnip")
-			local cmp = require("cmp")
-			local cmp_context = require("cmp.config.context")
-
-			cmp.setup({
-				completion = {
-					completeopt = "menu,menuone,preview,noselect",
-				},
-				enabled = function()
-					-- disable completion in comments
-					if cmp_context.in_treesitter_capture("comment") == true or cmp_context.in_syntax_group("Comment") then
-						return false
-					else
-						return true
-					end
-				end,
-				sources = {
-					{ name = "path" },
-					{ name = "buffer" },
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-				},
-				mapping = cmp.mapping.preset.insert({
-					["<C-Space>"] = cmp.mapping.complete({}),
-					["<CR>"] = cmp.mapping.confirm({
-						behavior = cmp.ConfirmBehavior.Replace,
-						select = true,
-					}),
-					["<Tab>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_next_item()
-						elseif luasnip.expand() then
-							luasnip.expand()
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-					["<S-Tab>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_prev_item()
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-				}),
-				snippet = {
-					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
-					end,
-				},
-			})
-		end,
-	},
-
+	-- https://cmp.saghen.dev/installation
 	{
 		'saghen/blink.cmp',
-
-		enabled = false,
 
 		-- use a release tag to download pre-built binaries
 		version = '1.*',
@@ -323,32 +251,25 @@ return {
 		},
 
 		opts = {
-			-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
-			-- 'super-tab' for mappings similar to vscode (tab to accept)
-			-- 'enter' for enter to accept
-			-- 'none' for no mappings
-			--
-			-- All presets have the following mappings:
-			-- C-space: Open menu or open docs if already open
-			-- C-n/C-p or Up/Down: Select next/previous item
-			-- C-e: Hide menu
-			-- C-k: Toggle signature help (if signature.enabled = true)
-			--
-			-- See :h blink-cmp-config-keymap for defining your own keymap
-			keymap = {
-				preset = 'super-tab',
-			},
-
-			-- appearance = {},
-
 			completion = {
 				documentation = {
 					auto_show = true,
 				},
 			},
-
+			fuzzy = {
+				implementation = "prefer_rust_with_warning"
+			},
+			keymap = {
+				preset = 'none',
+				['<tab>'] = { 'select_next', 'fallback' },
+				['<s-tab>'] = { 'select_prev', 'fallback' },
+				['<enter>'] = { 'accept', 'fallback' },
+			},
 			snippets = {
 				preset = 'luasnip',
+			},
+			sources = {
+				default = { 'lsp', 'path', 'snippets', 'buffer' },
 			},
 		},
 		opts_extend = { "sources.default" }
@@ -594,14 +515,6 @@ return {
 				},
 			})
 			vim.lsp.enable('tsgo_ls', false)
-
-			--
-			-- Capabilities
-			--
-
-			local lsp_defaults = require('lspconfig').util.default_config
-			lsp_defaults.capabilities =
-					vim.tbl_deep_extend('force', lsp_defaults.capabilities, require('cmp_nvim_lsp').default_capabilities())
 
 			--
 			-- Keymaps
