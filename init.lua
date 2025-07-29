@@ -84,6 +84,11 @@ vim.keymap.set("n", "<c-k>", "<c-w>k")
 vim.keymap.set("n", "<c-l>", "<c-w>l")
 vim.keymap.set("n", "<c-h>", "<c-w>h")
 
+-- Diagnostics
+vim.keymap.set("n", "<c-p>", function()
+  vim.diagnostic.open_float(nil, { focus = false })
+end)
+
 -- Stay at current occurence when using "*"
 vim.keymap.set("n", "*", "*``")
 
@@ -225,12 +230,8 @@ vim.diagnostic.config({
   underline = true,
   update_in_insert = false,
   virtual_lines = false,
-  virtual_text = false,
+  virtual_text = true,
 })
-
--- Show diagnostic in float
-vim.o.updatetime = 1000
-vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
 
 -------------------------------------------------------------------------------
 -- Statusline
