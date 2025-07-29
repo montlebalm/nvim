@@ -247,7 +247,15 @@ return {
 		version = '1.*',
 
 		dependencies = {
-			"L3MON4D3/LuaSnip", version = "v2.*",
+			{
+				"L3MON4D3/LuaSnip",
+				version = "v2.*",
+				config = function()
+					require("luasnip.loaders.from_vscode").lazy_load({
+						paths = { "./snippets" },
+					})
+				end
+			},
 		},
 
 		opts = {
@@ -272,7 +280,8 @@ return {
 				default = { 'lsp', 'path', 'snippets', 'buffer' },
 			},
 		},
-		opts_extend = { "sources.default" }
+
+		opts_extend = { "sources.default" },
 	},
 
 	------------------------------------------------------------------------------
