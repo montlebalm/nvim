@@ -588,7 +588,7 @@ return {
 					vim.keymap.set("n", "grd", vim.lsp.buf.definition, opts)
 					vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, opts)
 
-					vim.keymap.set("n", "<leader>af", vim.diagnostic.open_float, opts)
+					vim.keymap.set("n", "<c-p>", vim.diagnostic.open_float, opts)
 
 					vim.keymap.set("n", "<leader>ap", function()
 						vim.diagnostic.goto_prev({
