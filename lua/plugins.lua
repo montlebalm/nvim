@@ -535,16 +535,28 @@ return {
 						-- https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#tsserver-options
 						tsserver = {
 							maxTsServerMemory = 32768,
-							tsdk = './node_modules/typescript/lib',
 						},
 					},
 				},
 			})
-			vim.lsp.enable('ts_ls')
+			vim.lsp.enable('ts_ls', false)
 
 			vim.lsp.config('tsgo_ls', {
-				cmd = {
-					vim.loop.os_homedir() .. "/Developer/libs/typescript-go/built/local/tsgo", "--lsp", "-stdio"
+				cmd = { "tsgo", "--lsp", "--stdio" },
+				filetypes = {
+					'javascript',
+					'javascriptreact',
+					'javascript.jsx',
+					'typescript',
+					'typescriptreact',
+					'typescript.tsx',
+				},
+				root_markers = {
+					'tsconfig.json',
+					'jsconfig.json',
+					'package.json',
+					'.git',
+					'tsconfig.base.json',
 				},
 				init_options = {
 					preferences = {
@@ -560,7 +572,7 @@ return {
 					},
 				},
 			})
-			vim.lsp.enable('tsgo_ls', false)
+			vim.lsp.enable('tsgo_ls')
 
 			--
 			-- Keymaps
