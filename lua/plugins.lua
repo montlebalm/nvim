@@ -284,7 +284,16 @@ return {
 				preset = 'luasnip',
 			},
 			sources = {
-				default = { 'lsp', 'path', 'snippets', 'buffer' },
+				default = {
+					'lsp',
+					'path',
+					'snippets',
+					'buffer',
+				},
+				per_filetype = {
+					-- Disable completion
+					markdown = {},
+				},
 			},
 		},
 
