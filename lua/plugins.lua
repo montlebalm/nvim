@@ -350,6 +350,7 @@ return {
 				winopts = {
 					fullscreen = true,
 					preview = {
+						layout = "vertical",
 						winopts = {
 							number = false,
 						},
