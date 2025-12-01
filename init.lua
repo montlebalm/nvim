@@ -84,11 +84,6 @@ vim.keymap.set("n", "<c-k>", "<c-w>k")
 vim.keymap.set("n", "<c-l>", "<c-w>l")
 vim.keymap.set("n", "<c-h>", "<c-w>h")
 
--- Diagnostics
-vim.keymap.set("n", "<c-p>", function()
-  vim.diagnostic.open_float(nil, { focus = false })
-end)
-
 -- Stay at current occurence when using "*"
 vim.keymap.set("n", "*", "*``")
 
