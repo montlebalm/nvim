@@ -26,13 +26,13 @@
   "component": {
     "prefix": "component",
     "body": [
-      "import React, { ReactNode } from 'react';",
+      "import React from 'react';",
       "",
       "interface ${1:Component}Props {",
       "\t",
       "}",
       "",
-      "export const ${1:Component} = ({ foo }: ${1:Component}Props): ReactNode => {",
+      "export const ${1:Component} = ({ foo }: ${1:Component}Props): React.JSX.Element => {",
       "\treturn <div />;",
       "};"
     ]
