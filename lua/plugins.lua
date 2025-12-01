@@ -525,10 +525,10 @@ return {
 						-- Prefer project-relative imports (e.g., "foo/bar" instead of "../bar")
 						importModuleSpecifierPreference = "non-relative",
 					},
-					tsserver = {
-						logDirectory = '/Users/cmontrois/Desktop/ts-logs',
-						logVerbosity = 'verbose',
-					},
+					-- tsserver = {
+					-- 	logDirectory = '/Users/cmontrois/Desktop/ts-logs',
+					-- 	logVerbosity = 'verbose',
+					-- },
 				},
 				settings = {
 					typescript = {
