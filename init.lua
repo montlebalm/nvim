@@ -249,17 +249,16 @@ vim.diagnostic.config({
 -- Statusline
 -------------------------------------------------------------------------------
 
-vim.cmd([[
+local statusline = {
+  ' %{expand("%:p:h:t")}/%t', -- file name
+  '%m%r',                     -- modified, readonly
+  ' ',                        -- spacer
+  '%<',                       -- truncate if necessary
+  '%=',                       -- switch to right-hand side
+  '%l/%L:%c',                 -- line, character count
+}
 
-set statusline=
-set statusline+=\ %{expand('%:p:h:t')}/%t   " file name
-set statusline+=%m%r                        " modified, readonly
-set statusline+=\                           " spacer
-set statusline+=%<                          " truncate here if needed
-set statusline+=%=                          " switch to RHS
-set statusline+=%l/%L:%c\                   " number of lines
-
-]])
+vim.o.statusline = table.concat(statusline, '')
 
 -------------------------------------------------------------------------------
 -- Lazy
