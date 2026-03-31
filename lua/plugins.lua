@@ -130,7 +130,7 @@ return {
 		"montlebalm/greybeard",
 		dir = "~/Developer/montlebalm/greybeard",
 		dev = true,
-		enabled = true,
+		enabled = false,
 		lazy = false,
 		priority = 1000,
 		config = function()
