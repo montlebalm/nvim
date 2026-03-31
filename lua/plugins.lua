@@ -99,15 +99,6 @@ return {
 	-- Automatically create missing directories
 	"duggiefresh/vim-easydir",
 
-	-- {
-	-- 	'kiddos/gemini.nvim',
-	-- 	opts = {
-	-- 		completion = {
-	-- 			insert_result_key = "<c-j>",
-	-- 		},
-	-- 	}
-	-- },
-
 	-- Reload browser
 	{
 		"montlebalm/vim-reload-browser",
