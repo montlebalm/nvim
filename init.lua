@@ -285,3 +285,7 @@ require("lazy").setup({
     notify = false,
   },
 })
+
+
+vim.o.background = 'light';
+require('lightly').colorscheme()
