@@ -578,7 +578,6 @@ return {
 					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
 					vim.keymap.set("n", "grd", vim.lsp.buf.definition, opts)
-					vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, opts)
 
 					vim.keymap.set("n", "<c-p>", vim.diagnostic.open_float, opts)
 
