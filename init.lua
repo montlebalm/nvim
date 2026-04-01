@@ -102,7 +102,7 @@ vim.keymap.set("n", "<leader>c", function()
 end)
 
 -- Copy current file path on GitHub
-vim.cmd([[nnoremap <leader>C :0GBrowse!<CR>]])
+vim.keymap.set("n", "<leader>C", "<cmd>0GBrowse!<CR>")
 
 -- <enter> makes a newline (except in quickfix)
 vim.cmd([[nnoremap <expr> <CR> &buftype ==# 'quickfix' ? "\<CR>" : 'o<esc>']])
