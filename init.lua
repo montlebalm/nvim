@@ -161,16 +161,16 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("BufWinEnter", {
 	pattern = { "*.md" },
 	callback = function()
-		vim.o.wrap = true
-		vim.o.linebreak = true
+		vim.opt_local.wrap = true
+		vim.opt_local.linebreak = true
 	end,
 })
 
 vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
 	pattern = { "*.md" },
 	callback = function()
-		vim.o.wrap = false
-		vim.o.linebreak = false
+		vim.opt_local.wrap = false
+		vim.opt_local.linebreak = false
 	end,
 })
 
