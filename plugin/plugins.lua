@@ -466,12 +466,6 @@ vim.lsp.enable("eslint")
 vim.lsp.config("lua_ls", {
 	settings = {
 		Lua = {
-			diagnostics = {
-				globals = {
-					"require",
-					"vim",
-				},
-			},
 			runtime = {
 				version = "LuaJIT",
 			},
