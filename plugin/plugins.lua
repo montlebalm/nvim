@@ -395,36 +395,23 @@ vim.lsp.log.set_level("debug")
 vim.pack.add({
 	"https://github.com/neovim/nvim-lspconfig",
 	"https://github.com/mason-org/mason.nvim",
-	"https://github.com/mason-org/mason-lspconfig.nvim",
 })
 
---
--- Mason lspconfig
---
-
-require("mason").setup()
-
-require("mason-lspconfig").setup({
-	automatic_enable = false,
-	automatic_installation = true,
+require("mason").setup({
 	ensure_installed = {
-		"bashls",
-		"cssls",
-		"eslint",
-		"graphql",
-		"html",
-		"jsonls",
-		"lua_ls",
-		"svelte",
-		"ts_ls",
-		"vimls",
-		"yamlls",
+		"bash-language-server",
+		"css-lsp",
+		"eslint-lsp",
+		"graphql-language-service-cli",
+		"html-lsp",
+		"json-lsp",
+		"lua-language-server",
+		"svelte-language-server",
+		"typescript-language-server",
+		"vim-language-server",
+		"yaml-language-server",
 	},
 })
-
---
--- Nvim lspconfig
---
 
 -- (Dependency) Lua util library
 vim.pack.add({ "https://github.com/nvim-lua/plenary.nvim" })
