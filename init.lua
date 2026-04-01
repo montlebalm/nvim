@@ -48,9 +48,6 @@ vim.o.expandtab = true
 vim.o.splitbelow = true
 vim.o.splitright = true
 
--- Set completeopt to have a better completion experience
-vim.o.completeopt = "menuone,noselect"
-
 -- Optionally enable true color
 vim.cmd([[
   if (has("termguicolors"))
