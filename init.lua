@@ -92,7 +92,9 @@ vim.keymap.set("n", "<leader>o", function()
 end, { silent = true })
 
 -- Start edit command with the path of the current file
-vim.cmd([[map <leader>e :e <C-R>=expand("%:h") . "/"<CR>]])
+vim.keymap.set("n", "<leader>e", function()
+	vim.api.nvim_feedkeys(":e " .. vim.fn.expand("%:h") .. "/", "n", false)
+end)
 
 -- Copy current file path
 vim.cmd([[nnoremap <leader>c :let @*=expand("%:~:.")<CR>]])
