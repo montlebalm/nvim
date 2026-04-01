@@ -1,19 +1,9 @@
 --
 -- Colors
+-- https://github.com/nshern/neovim-default-colorscheme-extras
 --
 
--- https://github.com/nshern/neovim-default-colorscheme-extras
-local colors = {
-	bg_default = "",
-	bg_primary = "",
-	bg_secondary = "",
-	bg_tertiary = "",
-	fg_primary = "",
-	fg_secondary = "",
-	fg_tertiary = "",
-	highlight = "",
-}
-
+local colors
 if vim.o.background == "dark" then
 	colors = {
 		bg_default = "NvimDarkGrey1",
