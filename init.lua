@@ -87,7 +87,9 @@ vim.keymap.set("n", "<leader>=", "<c-W>=")
 vim.keymap.set("n", "<leader>/", ":noh<CR>")
 
 -- Open the directory of the current file
-vim.cmd([[map <leader>o :silent !open <C-R>=expand("%:p:h")<CR><CR>]])
+vim.keymap.set("n", "<leader>o", function()
+	vim.fn.system({ "open", vim.fn.expand("%:p:h") })
+end, { silent = true })
 
 -- Start edit command with the path of the current file
 vim.cmd([[map <leader>e :e <C-R>=expand("%:h") . "/"<CR>]])
