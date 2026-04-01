@@ -390,8 +390,6 @@ require("blink.cmp").setup({
 -- LSP
 ------------------------------------------------------------------------------
 
-vim.lsp.log.set_level("debug")
-
 vim.pack.add({
 	"https://github.com/neovim/nvim-lspconfig",
 	"https://github.com/mason-org/mason.nvim",
