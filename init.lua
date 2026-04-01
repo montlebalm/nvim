@@ -105,7 +105,12 @@ end)
 vim.keymap.set("n", "<leader>C", "<cmd>0GBrowse!<CR>")
 
 -- <enter> makes a newline (except in quickfix)
-vim.cmd([[nnoremap <expr> <CR> &buftype ==# 'quickfix' ? "\<CR>" : 'o<esc>']])
+vim.keymap.set("n", "<CR>", function()
+	if vim.bo.buftype == "quickfix" then
+		return "<CR>"
+	end
+	return "o<esc>"
+end, { expr = true })
 
 -- Enable <tab> to jump to matching paren
 vim.keymap.set("n", "<tab>", "%", { noremap = true })
