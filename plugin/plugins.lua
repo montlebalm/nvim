@@ -174,10 +174,6 @@ vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" })
 
 require("nvim-treesitter").setup()
 
-pcall(require("nvim-treesitter.install").update({
-	with_sync = true,
-}))
-
 require("nvim-treesitter.config").setup({
 	ensure_installed = {
 		-- Web
