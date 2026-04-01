@@ -48,12 +48,8 @@ vim.o.expandtab = true
 vim.o.splitbelow = true
 vim.o.splitright = true
 
--- Optionally enable true color
-vim.cmd([[
-  if (has("termguicolors"))
-   set termguicolors
-  endif
-]])
+-- Enable true color
+vim.o.termguicolors = true
 
 -- Don't wrap
 vim.o.wrap = false
