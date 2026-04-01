@@ -25,7 +25,7 @@ vim.o.breakindent = true
 vim.o.undofile = true
 
 -- Floating window border
-vim.o.winborder = 'solid'
+vim.o.winborder = "solid"
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -126,11 +126,11 @@ vim.keymap.set("v", "<C-k>", ":m-2<CR>gv=gv")
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    vim.highlight.on_yank({ higroup = 'Visual' })
-  end,
-  group = highlight_group,
-  pattern = "*",
+	callback = function()
+		vim.highlight.on_yank({ higroup = "Visual" })
+	end,
+	group = highlight_group,
+	pattern = "*",
 })
 
 -------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -------------------------------------------------------------------------------
 
 vim.api.nvim_create_autocmd("VimResized", {
-  command = "wincmd =",
+	command = "wincmd =",
 })
 
 -------------------------------------------------------------------------------
@@ -146,64 +146,55 @@ vim.api.nvim_create_autocmd("VimResized", {
 -------------------------------------------------------------------------------
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "help",
-  command = "wincmd L",
+	pattern = "help",
+	command = "wincmd L",
 })
 
 -------------------------------------------------------------------------------
 -- Markdown
 -------------------------------------------------------------------------------
 
-vim.api.nvim_create_autocmd('BufWinEnter', {
-  pattern = { '*.md' },
-  callback = function()
-    vim.o.wrap = true
-    vim.o.linebreak = true
-  end,
+vim.api.nvim_create_autocmd("BufWinEnter", {
+	pattern = { "*.md" },
+	callback = function()
+		vim.o.wrap = true
+		vim.o.linebreak = true
+	end,
 })
 
-vim.api.nvim_create_autocmd({ 'BufWinLeave' }, {
-  pattern = { '*.md' },
-  callback = function()
-    vim.o.wrap = false
-    vim.o.linebreak = false
-  end,
+vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
+	pattern = { "*.md" },
+	callback = function()
+		vim.o.wrap = false
+		vim.o.linebreak = false
+	end,
 })
 
 -------------------------------------------------------------------------------
 -- Copy without leading whitespace
 -------------------------------------------------------------------------------
 
-vim.api.nvim_create_user_command(
-  "CleanYank",
-  function(tbl)
-    local selection = vim.api.nvim_buf_get_lines(
-      0,
-      tbl.line1 - 1,
-      tbl.line2,
-      true
-    )
+vim.api.nvim_create_user_command("CleanYank", function(tbl)
+	local selection = vim.api.nvim_buf_get_lines(0, tbl.line1 - 1, tbl.line2, true)
 
-    -- Calculate number of spaces to remove from each line
-    local first_line = selection[1]
-    local first_line_leading_whitespace = first_line:match('^%s*')
-    local num_leading_spaces = string.len(first_line_leading_whitespace)
+	-- Calculate number of spaces to remove from each line
+	local first_line = selection[1]
+	local first_line_leading_whitespace = first_line:match("^%s*")
+	local num_leading_spaces = string.len(first_line_leading_whitespace)
 
-    local selection_trimmed = {}
-    for key, line in pairs(selection) do
-      -- Remove leading spaces
-      local line_trimmed = string.sub(line, num_leading_spaces + 1)
+	local selection_trimmed = {}
+	for key, line in pairs(selection) do
+		-- Remove leading spaces
+		local line_trimmed = string.sub(line, num_leading_spaces + 1)
 
-      -- Concatenate
-      table.insert(selection_trimmed, line_trimmed)
-    end
+		-- Concatenate
+		table.insert(selection_trimmed, line_trimmed)
+	end
 
-    -- Copy to clipboard
-    local selection_trimmed_text = table.concat(selection_trimmed, "\n")
-    vim.fn.setreg("+", selection_trimmed_text)
-  end,
-  { range = true }
-)
+	-- Copy to clipboard
+	local selection_trimmed_text = table.concat(selection_trimmed, "\n")
+	vim.fn.setreg("+", selection_trimmed_text)
+end, { range = true })
 
 vim.keymap.set("v", "<C-y>", ":CleanYank<CR>")
 
@@ -212,17 +203,17 @@ vim.keymap.set("v", "<C-y>", ":CleanYank<CR>")
 -------------------------------------------------------------------------------
 
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  pattern = {
-    "*.aliases",
-    "*.exports",
-    "*.extra",
-    "*.path",
-    "*.private",
-    "*.ripgreprc",
-  },
-  callback = function(event)
-    vim.api.nvim_buf_set_option(event.buf, "filetype", "bash")
-  end,
+	pattern = {
+		"*.aliases",
+		"*.exports",
+		"*.extra",
+		"*.path",
+		"*.private",
+		"*.ripgreprc",
+	},
+	callback = function(event)
+		vim.api.nvim_buf_set_option(event.buf, "filetype", "bash")
+	end,
 })
 
 -------------------------------------------------------------------------------
@@ -230,19 +221,19 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 -------------------------------------------------------------------------------
 
 vim.diagnostic.config({
-  severity_sort = false,
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = "•",
-      [vim.diagnostic.severity.HINT] = "?",
-      [vim.diagnostic.severity.INFO] = "i",
-      [vim.diagnostic.severity.WARN] = "◦",
-    },
-  },
-  underline = true,
-  update_in_insert = false,
-  virtual_lines = false,
-  virtual_text = false,
+	severity_sort = false,
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "•",
+			[vim.diagnostic.severity.HINT] = "?",
+			[vim.diagnostic.severity.INFO] = "i",
+			[vim.diagnostic.severity.WARN] = "◦",
+		},
+	},
+	underline = true,
+	update_in_insert = false,
+	virtual_lines = false,
+	virtual_text = false,
 })
 
 -------------------------------------------------------------------------------
@@ -250,42 +241,19 @@ vim.diagnostic.config({
 -------------------------------------------------------------------------------
 
 local statusline = {
-  ' %{expand("%:p:h:t")}/%t', -- file name
-  '%m%r',                     -- modified, readonly
-  ' ',                        -- spacer
-  '%<',                       -- truncate if necessary
-  '%=',                       -- switch to right-hand side
-  '%l/%L:%c',                 -- line, character count
+	' %{expand("%:p:h:t")}/%t', -- file name
+	"%m%r", -- modified, readonly
+	" ", -- spacer
+	"%<", -- truncate if necessary
+	"%=", -- switch to right-hand side
+	"%l/%L:%c", -- line, character count
 }
 
-vim.o.statusline = table.concat(statusline, '')
+vim.o.statusline = table.concat(statusline, "")
 
 -------------------------------------------------------------------------------
--- Lazy
+-- Colorscheme
 -------------------------------------------------------------------------------
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup({
-  spec = {
-    import = "plugins",
-  },
-  change_detection = {
-    notify = false,
-  },
-})
-
-
-vim.o.background = 'light';
-require('lightly').colorscheme()
+vim.o.background = "light"
+require("lightly").colorscheme()
