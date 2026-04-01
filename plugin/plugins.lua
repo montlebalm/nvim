@@ -567,6 +567,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end, opts)
 
 		-- Eslint fix
-		vim.keymap.set("n", "gl", ":LspEslintFixAll<CR>")
+		vim.keymap.set("n", "gl", "<cmd>LspEslintFixAll<CR>", opts)
 	end,
 })
