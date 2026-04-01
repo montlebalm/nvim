@@ -432,8 +432,8 @@ require("fidget").setup({
 })
 
 -- (Dependency) Additional lua configuration, makes nvim stuff amazing!
-vim.pack.add({ "https://github.com/folke/neodev.nvim" })
-require("neodev").setup()
+vim.pack.add({ "https://github.com/folke/lazydev.nvim" })
+require("lazydev").setup()
 
 -- (Dependency) Support for file operations using built-in LSP
 vim.pack.add({ "https://github.com/antosha417/nvim-lsp-file-operations" })
