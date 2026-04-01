@@ -206,18 +206,15 @@ vim.keymap.set("v", "<C-y>", ":CleanYank<CR>")
 -- Custom filetype detection
 -------------------------------------------------------------------------------
 
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-	pattern = {
-		"*.aliases",
-		"*.exports",
-		"*.extra",
-		"*.path",
-		"*.private",
-		"*.ripgreprc",
+vim.filetype.add({
+	extension = {
+		aliases = "bash",
+		exports = "bash",
+		extra = "bash",
+		path = "bash",
+		private = "bash",
+		ripgreprc = "bash",
 	},
-	callback = function(event)
-		vim.api.nvim_buf_set_option(event.buf, "filetype", "bash")
-	end,
 })
 
 -------------------------------------------------------------------------------
