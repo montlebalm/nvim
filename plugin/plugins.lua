@@ -443,6 +443,11 @@ require("lsp-file-operations").setup()
 -- Servers
 --
 
+-- Add completion for all LSPs
+vim.lsp.config("*", {
+	capabilities = require("blink.cmp").get_lsp_capabilities(),
+})
+
 vim.lsp.enable("bashls")
 vim.lsp.enable("cssls")
 vim.lsp.enable("graphql", false)
