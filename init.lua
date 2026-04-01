@@ -97,7 +97,9 @@ vim.keymap.set("n", "<leader>e", function()
 end)
 
 -- Copy current file path
-vim.cmd([[nnoremap <leader>c :let @*=expand("%:~:.")<CR>]])
+vim.keymap.set("n", "<leader>c", function()
+	vim.fn.setreg("*", vim.fn.expand("%:~:."))
+end)
 
 -- Copy current file path on GitHub
 vim.cmd([[nnoremap <leader>C :0GBrowse!<CR>]])
