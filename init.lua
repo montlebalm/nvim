@@ -256,4 +256,4 @@ vim.o.statusline = table.concat(statusline, "")
 -------------------------------------------------------------------------------
 
 vim.o.background = "light"
-require("lightly").colorscheme()
+vim.cmd.colorscheme("lightly")
