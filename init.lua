@@ -241,16 +241,40 @@ vim.diagnostic.config({
 -- Statusline
 -------------------------------------------------------------------------------
 
+function DiagnosticErrorCount()
+	local counts = vim.diagnostic.count(0)
+	local errors = counts[vim.diagnostic.severity.ERROR] or 0
+	if errors == 0 then
+		return ""
+	end
+	return string.format("(•%d) ", errors)
+end
+
 local statusline = {
-	' %{expand("%:p:h:t")}/%t', -- file name
-	"%m%r", -- modified, readonly
-	" ", -- spacer
-	"%<", -- truncate if necessary
-	"%=", -- switch to right-hand side
-	"%l/%L:%c", -- line, character count
+	-- File name
+	' %{expand("%:p:h:t")}/%t',
+	-- Modified, readonly
+	"%m%r",
+	-- Spacer
+	" ",
+	-- Truncate if necessary
+	"%<",
+	-- Switch to right-hand side
+	"%=",
+	-- Diagnostic errors
+	"%{%v:lua.DiagnosticErrorCount()%}",
+	-- Line, character count
+	"%l/%L:%c",
 }
 
 vim.o.statusline = table.concat(statusline, "")
+
+-- Update statusline when diagnostics change
+vim.api.nvim_create_autocmd("DiagnosticChanged", {
+	callback = function()
+		vim.cmd("redrawstatus")
+	end,
+})
 
 -------------------------------------------------------------------------------
 -- Colorscheme
