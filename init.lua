@@ -252,7 +252,7 @@ end
 
 local statusline = {
 	-- File name
-	' %{expand("%:p:h:t")}/%t',
+	' %{pathshorten(expand("%:~:."))}',
 	-- Modified, readonly
 	"%m%r",
 	-- Spacer
