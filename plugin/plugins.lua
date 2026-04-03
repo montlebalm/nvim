@@ -454,15 +454,10 @@ vim.lsp.config("ts_ls", {
 	init_options = {
 		-- https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#preferences-options
 		preferences = {
-			-- canUseWatchEvents = true,
 			disableAutomaticTypingAcquisition = true,
 			-- Prefer project-relative imports (e.g., "foo/bar" instead of "../bar")
 			importModuleSpecifierPreference = "non-relative",
 		},
-		-- tsserver = {
-		-- 	logDirectory = '/Users/cmontrois/Desktop/ts-logs',
-		-- 	logVerbosity = 'verbose',
-		-- },
 	},
 	settings = {
 		typescript = {
