@@ -278,6 +278,9 @@ vim.keymap.set("n", "<leader>p", "<cmd>FzfLua files<cr>", {
 vim.keymap.set("n", "<leader>f", "<cmd>FzfLua live_grep<cr>", {
 	desc = "Search live grep",
 })
+vim.keymap.set("n", "<leader>d", "<cmd>FzfLua diagnostics_document<cr>", {
+	desc = "Search document diagnostics",
+})
 vim.keymap.set("n", "<leader>m", "<cmd>FzfLua marks<cr>", {
 	desc = "Search marks",
 })
