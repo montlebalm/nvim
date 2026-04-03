@@ -157,72 +157,42 @@ require("conform").setup({
 -- Treesitter
 ------------------------------------------------------------------------------
 
--- Run "TSUpdate" when updated
-vim.api.nvim_create_autocmd("PackChanged", {
-	callback = function(ev)
-		local name, kind = ev.data.spec.name, ev.data.kind
-		if name == "nvim-treesitter" and kind == "update" then
-			if not ev.data.active then
-				vim.cmd.packadd("nvim-treesitter")
-			end
-			vim.cmd("TSUpdate")
-		end
-	end,
-})
-
 vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" })
 
-require("nvim-treesitter").setup()
-
-require("nvim-treesitter.config").setup({
-	ensure_installed = {
-		-- Web
-		"css",
-		"html",
-		"javascript",
-		"scss",
-		"svelte",
-		"tsx",
-		"typescript",
-		-- Data
-		"graphql",
-		"json",
-		"yaml",
-		-- Git
-		"git_config",
-		"git_rebase",
-		"gitcommit",
-		"gitignore",
-		-- Vim
-		"lua",
-		"vim",
-		"vimdoc",
-		-- Other
-		"markdown",
-		"ssh_config",
-	},
-	auto_install = true,
-	highlight = {
-		enable = true,
-	},
-	indent = {
-		enable = true,
-		disable = { "python" },
-	},
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-			init_selection = "<c-space>",
-			node_incremental = "<c-space>",
-			scope_incremental = "<c-s>",
-			node_decremental = "<M-space>",
-		},
-	},
+require("nvim-treesitter").install({
+	-- Web
+	"css",
+	"html",
+	"javascript",
+	"scss",
+	"svelte",
+	"tsx",
+	"typescript",
+	-- Data
+	"graphql",
+	"json",
+	"yaml",
+	-- Git
+	"git_config",
+	"git_rebase",
+	"gitcommit",
+	"gitignore",
+	-- Vim
+	"lua",
+	"vim",
+	"vimdoc",
+	-- Other
+	"markdown",
+	"ssh_config",
 })
 
 vim.opt.foldlevel = 99
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+-- Incremental selection
+vim.keymap.set("n", "<C-space>", "van", { remap = true })
+vim.keymap.set("v", "<C-space>", "an", { remap = true })
 
 ------------------------------------------------------------------------------
 -- Pickers
