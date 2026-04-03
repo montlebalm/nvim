@@ -237,6 +237,10 @@ vim.diagnostic.config({
 	virtual_text = false,
 })
 
+-- Symbol directory
+--   Error:  • ⊗ ∅
+--   Warn: ⚠  ◦ △ ◌
+
 -------------------------------------------------------------------------------
 -- Statusline
 -------------------------------------------------------------------------------
@@ -244,10 +248,27 @@ vim.diagnostic.config({
 function DiagnosticErrorCount()
 	local counts = vim.diagnostic.count(0)
 	local errors = counts[vim.diagnostic.severity.ERROR] or 0
-	if errors == 0 then
+	local warnings = counts[vim.diagnostic.severity.WARN] or 0
+	if errors == 0 and warnings == 0 then
 		return ""
 	end
-	return string.format("(•%d) ", errors)
+
+	local signs = vim.diagnostic.config().signs.text
+	if signs == nil then
+		return ""
+	end
+
+	local error_icon = signs[vim.diagnostic.severity.ERROR]
+	local warn_icon = signs[vim.diagnostic.severity.WARN]
+	local parts = {}
+	if errors > 0 then
+		table.insert(parts, error_icon .. errors)
+	end
+	if warnings > 0 then
+		table.insert(parts, warn_icon .. warnings)
+	end
+
+	return table.concat(parts, " ") .. " "
 end
 
 local statusline = {
