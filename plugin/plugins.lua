@@ -157,7 +157,12 @@ require("conform").setup({
 -- Treesitter
 ------------------------------------------------------------------------------
 
-vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" })
+vim.pack.add({
+	{
+		src = "https://github.com/nvim-treesitter/nvim-treesitter",
+		version = "main",
+	},
+})
 
 require("nvim-treesitter").install({
 	-- Web
@@ -184,6 +189,16 @@ require("nvim-treesitter").install({
 	-- Other
 	"markdown",
 	"ssh_config",
+})
+
+-- Start treesitter for installed parsers
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function(args)
+		local lang = vim.treesitter.language.get_lang(args.match)
+		if lang and vim.treesitter.language.add(lang) then
+			vim.treesitter.start()
+		end
+	end,
 })
 
 vim.opt.foldlevel = 99
