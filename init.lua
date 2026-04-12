@@ -54,6 +54,10 @@ vim.o.termguicolors = true
 -- Don't wrap
 vim.o.wrap = false
 
+-- Don't highlight matched paren under cursor
+-- This makes highlight styling work a little better
+vim.g.matchparen_disable_cursor_hl = true
+
 -------------------------------------------------------------------------------
 -- Basic keymaps
 -------------------------------------------------------------------------------
