@@ -15,6 +15,9 @@ vim.o.wrapscan = false
 -- Enable mouse mode
 vim.o.mouse = "a"
 
+-- Better increment/decrement
+vim.o.nrformats = "blank"
+
 -- Sync clipboard between OS and Neovim.
 vim.o.clipboard = "unnamedplus"
 
