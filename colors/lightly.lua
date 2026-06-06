@@ -1,4 +1,17 @@
 --
+-- Setup
+--
+
+vim.cmd("highlight clear")
+vim.cmd("syntax reset")
+
+vim.g.colors_name = "lightly"
+
+local function set(name, options)
+	vim.api.nvim_set_hl(0, name, options)
+end
+
+--
 -- Colors
 -- https://github.com/nshern/neovim-default-colorscheme-extras
 --
@@ -27,15 +40,6 @@ else
 		highlight = "NvimLightYellow",
 	}
 end
-
-local function set(name, options)
-	vim.api.nvim_set_hl(0, name, options)
-end
-
-vim.cmd("highlight clear")
-vim.cmd("syntax reset")
-
-vim.g.colors_name = "lightly"
 
 --
 -- Reset
@@ -66,6 +70,8 @@ set("VisualNOS", { bg = colors.bg_tertiary })
 set("CurSearch", { bg = colors.fg_primary, fg = colors.bg_default })
 set("IncSearch", { link = "CurSearch" })
 
+set("MatchParen", { bg = colors.bg_secondary })
+
 -- Primary
 set("Normal", { bg = colors.bg_default, fg = colors.fg_primary })
 
@@ -81,6 +87,13 @@ set("@tag.tsx", { bold = true })
 set("@tag.builtin.tsx", { link = "@tag.tsx" })
 set("@keyword.return.tsx", { link = "@tag.tsx" })
 set("@keyword.return.typescript", { link = "@tag.tsx" })
+set("@keyword.break", { link = "@tag.tsx" })
+set("@keyword.continue", { link = "@tag.tsx" })
+
+-- Diff
+set("DiffAdd", { bg = colors.highlight })
+set("DiffDelete", { bg = colors.bg_secondary })
+set("CursorLine", { bg = colors.bg_tertiary })
 
 --
 -- Chrome
