@@ -1,4 +1,128 @@
 --------------------------------------------------------------------------------
+-- Startup
+--------------------------------------------------------------------------------
+
+vim.pack.add({ "https://github.com/nvimdev/dashboard-nvim" })
+
+-- Open all changed files
+vim.api.nvim_create_user_command("GitChanged", function()
+	local files = vim.fn.systemlist("git diff --name-only HEAD")
+	if #files > 0 then
+		vim.cmd("args " .. table.concat(vim.tbl_map(vim.fn.fnameescape, files), " "))
+	end
+end, {})
+
+require("dashboard").setup({
+	config = {
+		center = {
+			-- New file
+			{
+				action = "ene",
+				desc = "New file",
+				key = "n",
+				key_hl = "StatusLine",
+				key_format = " %s ",
+			},
+			-- Git: local changes
+			{
+				action = "GitChanged",
+				desc = "Open local changes",
+				key = "l",
+				key_hl = "StatusLine",
+				key_format = " %s ",
+			},
+			-- Nvim: update
+			{
+				action = "lua vim.pack.update()",
+				desc = "Nvim - Update plugins",
+				key = "u",
+				key_hl = "StatusLine",
+				key_format = " %s ",
+			},
+			-- Nvim: config
+			{
+				action = "edit ~/.config/nvim/init.lua",
+				desc = "Nvim - Edit config",
+				key = "c",
+				key_hl = "StatusLine",
+				key_format = " %s ",
+			},
+			-- Nvim: plugins
+			{
+				action = "edit ~/.config/nvim/plugin/plugins.lua",
+				desc = "Nvim - Edit plugins",
+				key = "p",
+				key_hl = "StatusLine",
+				key_format = " %s ",
+			},
+		},
+		footer = {},
+		header = {
+			" .          .",
+			" ';;,.        ::'",
+			" ,:::;,,        :ccc,",
+			",::c::,,,,.     :cccc,",
+			",cccc:;;;;;.    cllll,",
+			",cccc;.;;;;;,   cllll;",
+			":cccc; .;;;;;;. coooo;",
+			";llll;   ,:::::'loooo;",
+			";llll:    ':::::loooo:",
+			":oooo:     .::::llodd:",
+			".;ooo:       ;cclooo:.",
+			".;oc        'coo;.",
+			" .'         .,.",
+			"",
+			"",
+		},
+		vertical_center = true,
+	},
+	hide = {
+		statusline = true,
+	},
+	theme = "doom",
+})
+
+--------------------------------------------------------------------------------
+-- Claude
+--------------------------------------------------------------------------------
+
+vim.pack.add({ "https://github.com/folke/sidekick.nvim" })
+
+require("sidekick").setup({
+	cli = {
+		tools = {
+			claude = {
+				cmd = { "slack", "claude" },
+			},
+		},
+	},
+	win = {
+		layout = "right",
+		split = {
+			width = 40,
+		},
+	},
+})
+
+vim.keymap.set("n", "<leader>tt", function()
+	require("sidekick.cli").toggle({ name = "claude", focus = true })
+end, {
+	desc = "Sidekick Toggle CLI",
+})
+
+vim.keymap.set("x", "<leader>ts", function()
+	require("sidekick.cli").send({ msg = "{selection}" })
+end, {
+	desc = "Sidekick send selection",
+})
+
+vim.keymap.set("n", "<leader>tf", function()
+	require("sidekick.cli").send({ msg = "{file}" })
+end, {
+	desc = "Sidekick send file",
+})
+
+--------------------------------------------------------------------------------
 -- Git
 --------------------------------------------------------------------------------
 
@@ -173,6 +297,8 @@ require("nvim-treesitter").install({
 	"svelte",
 	"tsx",
 	"typescript",
+	-- Server
+	"hack",
 	-- Data
 	"graphql",
 	"json",
@@ -435,10 +561,20 @@ vim.lsp.enable("cssls")
 vim.lsp.enable("graphql", false)
 vim.lsp.enable("html")
 vim.lsp.enable("jsonls")
-vim.lsp.enable("stylelint_lsp")
 vim.lsp.enable("svelte", false)
 vim.lsp.enable("vimls")
 vim.lsp.enable("yamlls", false)
+
+vim.lsp.config("stylelint_lsp", {
+	filetypes = { "css", "less", "scss" },
+	settings = {
+		stylelint = {
+			snippet = { "css", "less", "postcss", "scss" },
+			validate = { "css", "less", "postcss", "scss" },
+		},
+	},
+})
+vim.lsp.enable("stylelint_lsp")
 
 vim.lsp.config("eslint", {
 	settings = {
@@ -475,7 +611,15 @@ vim.lsp.config("ts_ls", {
 		},
 	},
 	settings = {
+		javascript = {
+			preferences = {
+				importModuleSpecifierPreference = "non-relative",
+			},
+		},
 		typescript = {
+			preferences = {
+				importModuleSpecifierPreference = "non-relative",
+			},
 			-- https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#tsserver-options
 			tsserver = {
 				maxTsServerMemory = 32768,
@@ -486,7 +630,8 @@ vim.lsp.config("ts_ls", {
 vim.lsp.enable("ts_ls", false)
 
 vim.lsp.config("tsgo_ls", {
-	cmd = { "/Users/cmontrois/Developer/slack/webapp/node_modules/.bin/tsgo", "--lsp", "--stdio" },
+	-- cmd = { "/Users/cmontrois/Developer/slack/webapp/node_modules/.bin/tsgo", "--lsp", "--stdio" },
+	cmd = { "tsgo", "--lsp", "--stdio" },
 	filetypes = {
 		"javascript",
 		"javascriptreact",
@@ -507,7 +652,15 @@ vim.lsp.config("tsgo_ls", {
 		},
 	},
 	settings = {
+		javascript = {
+			preferences = {
+				importModuleSpecifierPreference = "non-relative",
+			},
+		},
 		typescript = {
+			preferences = {
+				importModuleSpecifierPreference = "non-relative",
+			},
 			tsserver = {
 				maxTsServerMemory = 32768,
 			},
